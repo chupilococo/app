@@ -5,7 +5,7 @@ use DaVinci\Models\Producto;
 use DaVinci\Core\View;
 use DaVinci\Core\Route;
 
-class ProductosController
+class ProductosController extends BaseController
 {
 	public function todos()
 	{
@@ -30,7 +30,7 @@ class ProductosController
 	{
 		// Y la verificación de si el usuario está autenticado para hacer esta
 		// acción?
-		$token = $_SERVER['HTTP_X_TOKEN'];
+		/*$token = $_SERVER['HTTP_X_TOKEN'];
 
 		if(!$tokenData = Auth::isTokenValid($token)) {
 			View::renderJson([
@@ -39,6 +39,9 @@ class ProductosController
 			]); // blah blah
 			exit;
 		} // EZ
+
+		$userId = $tokenData['id'];*/
+		$userId = $this->checkUserIsLogged();
 
 		$input = file_get_contents('php://input');
 		$postData = json_decode($input, true);

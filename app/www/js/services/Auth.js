@@ -1,4 +1,4 @@
-angular.module('dvProds.services')
+angular.module('dcPets.services')
 .factory('Auth', [
 	'$http',
 	'API_SERVER',

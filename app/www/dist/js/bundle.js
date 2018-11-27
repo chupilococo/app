@@ -1,15 +1,15 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'dvProds' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'dcPets' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'dvProds.services' is found in services.js
-// 'dvProds.controllers' is found in controllers.js
+// 'dcPets.services' is found in services.js
+// 'dcPets.controllers' is found in controllers.js
 // angular.module define o abre algún "módulo" o "componente" de
 // angular. Principalmente, el módulo de la app.
 // Recibe 2 parámetros:
 // 1. string. El nombre del módulo. En caso de ser la app, va el
 //  valor del ng-app.
 // 2. Array (opcional). Lista las dependencias.
-angular.module('dvProds', ['ionic', 'dvProds.controllers', 'dvProds.services'])
+angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 
 // El método run sirve para indicar acciones que queremos
 // se ejecuten al arrancar la aplicación.
@@ -170,13 +170,13 @@ angular.module('dvProds', ['ionic', 'dvProds.controllers', 'dvProds.services'])
 })
 
 // Definimos la constante con la ruta de la api.
-.constant('API_SERVER', 'http://localhost/santiago/api');
+.constant('API_SERVER', 'http://localhost/app/api');
 
 // La presencia del segundo parámetro del .module, indica
 // que el módulo se está creando.
 // Si se ignora, significa que estamos abriendo un 
 // módulo existente.
-angular.module('dvProds.controllers', [])
+angular.module('dcPets.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
@@ -205,7 +205,7 @@ angular.module('dvProds.controllers', [])
   };
 });
 
-angular.module('dvProds.services', [])
+angular.module('dcPets.services', [])
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
@@ -256,7 +256,7 @@ angular.module('dvProds.services', [])
   };
 });
 
-angular.module('dvProds.controllers')
+angular.module('dcPets.controllers')
 .controller('LoginCtrl', [
 	'$scope',
 	'$ionicPopup',
@@ -288,8 +288,8 @@ angular.module('dvProds.controllers')
 	}
 ]);
 // Agregamos un nuevo controller al módulo de controllers que ionic
-// definió ('dvProds.controllers').
-angular.module('dvProds.controllers')
+// definió ('dcPets.controllers').
+angular.module('dcPets.controllers')
 .controller('ProductosCtrl', [
 	'$scope',
 	// 'Producto' sale del servicio "Producto.js".
@@ -314,7 +314,7 @@ angular.module('dvProds.controllers')
 	    });		
 	}
 ]);
-angular.module('dvProds.controllers')
+angular.module('dcPets.controllers')
 .controller('ProductosDetalleCtrl', [
 	'$scope',
 	'$stateParams',
@@ -336,7 +336,7 @@ angular.module('dvProds.controllers')
 			}); // papita :3
 	}
 ]);
-angular.module('dvProds.controllers')
+angular.module('dcPets.controllers')
 .controller('ProductosNuevoCtrl', [
 	'$scope',
 	'$state',
@@ -374,7 +374,7 @@ angular.module('dvProds.controllers')
 		}; // EZ PZ - Se pronuncia: "Easy peasy".
 	}
 ]);
-angular.module('dvProds.services')
+angular.module('dcPets.services')
 .factory('Auth', [
 	'$http',
 	'API_SERVER',
@@ -437,7 +437,7 @@ angular.module('dvProds.services')
 ]);
 // Primero, abrimos el módulo de servicios, y creamos el
 // nuevo servicio.
-angular.module('dvProds.services')
+angular.module('dcPets.services')
 // .factory es el método para crear nuevos servicios.
 .factory('Producto', [
 	'$http',

@@ -10,10 +10,10 @@ class DBConnection
 {
 	// Las propiedades con static pasan a pertenecer a la _clase_, y no a los
 	// _objetos_.
-	private static $host = "localhost";
-	private static $user = "root";
-	private static $pass = "";
-	private static $base = "cwm";
+	private static $host = "52.26.64.212";
+	private static $user = "wadmin";
+	private static $pass = "bernardo05";
+	private static $base = "IDM";
 	private static $db;
 
 	/** Constructor privado, para asegurarnos de que no instancien libremente esta clase. */

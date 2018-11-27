@@ -1,4 +1,4 @@
-angular.module('dvProds.controllers')
+angular.module('dcPets.controllers')
 .controller('ProductosNuevoCtrl', [
 	'$scope',
 	'$state',

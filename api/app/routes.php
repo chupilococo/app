@@ -8,6 +8,8 @@
  */
 use DaVinci\Core\Route;
 
+Route::add('GET', '/perfil', 'UsuarioController@perfil');
+Route::add('POST', '/login', 'AuthController@login');
 Route::add('GET', '/productos', 'ProductosController@todos');
 Route::add('GET', '/productos/{id}', 'ProductosController@detalle');
 

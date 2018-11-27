@@ -1,6 +1,6 @@
 // Agregamos un nuevo controller al módulo de controllers que ionic
-// definió ('dvProds.controllers').
-angular.module('dvProds.controllers')
+// definió ('dcPets.controllers').
+angular.module('dcPets.controllers')
 .controller('ProductosCtrl', [
 	'$scope',
 	// 'Producto' sale del servicio "Producto.js".

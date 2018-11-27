@@ -2,7 +2,7 @@
 // que el módulo se está creando.
 // Si se ignora, significa que estamos abriendo un 
 // módulo existente.
-angular.module('dvProds.controllers', [])
+angular.module('dcPets.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 

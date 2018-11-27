@@ -1,15 +1,15 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'dvProds' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'dcPets' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'dvProds.services' is found in services.js
-// 'dvProds.controllers' is found in controllers.js
+// 'dcPets.services' is found in services.js
+// 'dcPets.controllers' is found in controllers.js
 // angular.module define o abre algún "módulo" o "componente" de
 // angular. Principalmente, el módulo de la app.
 // Recibe 2 parámetros:
 // 1. string. El nombre del módulo. En caso de ser la app, va el
 //  valor del ng-app.
 // 2. Array (opcional). Lista las dependencias.
-angular.module('dvProds', ['ionic', 'dvProds.controllers', 'dvProds.services'])
+angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 
 // El método run sirve para indicar acciones que queremos
 // se ejecuten al arrancar la aplicación.
@@ -170,4 +170,4 @@ angular.module('dvProds', ['ionic', 'dvProds.controllers', 'dvProds.services'])
 })
 
 // Definimos la constante con la ruta de la api.
-.constant('API_SERVER', 'http://localhost/santiago/api');
+.constant('API_SERVER', 'http://localhost/app/api');

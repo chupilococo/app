@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=utf-8");
 
-$db = mysqli_connect('localhost:3308', 'root', '', 'cwm');
+$db = mysqli_connect('52.26.64.212', 'wadmin', 'bernardo05', 'IDM');
 
 mysqli_set_charset($db, 'utf8');
 
