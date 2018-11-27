@@ -1,0 +1,31 @@
+<!--
+Create tabs with an icon and label, using the tabs-positive style.
+Each tab's child <ion-nav-view> directive will have its own
+navigation history that also transitions its views in and out.
+-->
+<ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+  <!-- Home Tab -->
+  <!-- Cada ion-tab define una "pestaña" de navegación. -->
+  <ion-tab title="Home" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/dash">
+    <!-- 
+    Cada uno de estos ion-nav-view dentro de un ion-tab, define
+    la vista donde los templates para este tab se van a cargar.
+    Noten que cada una de estas vistas tiene un
+    "name". Es el que se debe usar luego en el
+    "views" del .state(). -->
+    <ion-nav-view name="tab-home"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Productos Tab -->
+  <ion-tab title="Productos" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/productos">
+    <ion-nav-view name="tab-productos"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Account Tab -->
+  <ion-tab title="Perfil" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/login">
+    <ion-nav-view name="tab-perfil"></ion-nav-view>
+  </ion-tab>
+
+
+</ion-tabs>
