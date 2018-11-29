@@ -31,12 +31,12 @@ angular.module('dcPets.services')
 		// debemos retornar como un objeto.
 		return {
 			todos: function() {
-				// return $http.get(API_SERVER + '/productos');
-				return $http.get(API_SERVER + '/productos.php');
+				return $http.get(API_SERVER + '/productos');
+				//return $http.get(API_SERVER + '/productos.php');
 			},
 			uno: function(id) {
-				// return $http.get(API_SERVER + '/productos/' + id);
-				return $http.get(API_SERVER + '/productos-detalle.php?id=' + id);
+				return $http.get(API_SERVER + '/productos/' + id);
+				//return $http.get(API_SERVER + '/productos-detalle.php?id=' + id);
 			},
 			crear: function(datos) {
 				// return $http.post(API_SERVER + '/productos', datos);

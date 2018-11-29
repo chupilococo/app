@@ -170,4 +170,4 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 })
 
 // Definimos la constante con la ruta de la api.
-.constant('API_SERVER', 'http://localhost/app/api');
+.constant('API_SERVER', 'http://localhost/app/api/public');

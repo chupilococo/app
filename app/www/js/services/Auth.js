@@ -10,7 +10,8 @@ angular.module('dcPets.services')
 			userData 	= null;
 
 		function login(user) {
-			return $http.post(API_SERVER + '/login.php', user).then(function(response) {
+			//return $http.post(API_SERVER + '/login.php', user).then(function(response) {
+			return $http.post(API_SERVER + '/login', user).then(function(response) {
 				// Vamos a verificar si la petición del
 				// login tuvo éxito o no.
 				let responsePayload = response.data;

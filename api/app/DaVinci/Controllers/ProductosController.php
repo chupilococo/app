@@ -5,13 +5,12 @@ use DaVinci\Models\Producto;
 use DaVinci\Core\View;
 use DaVinci\Core\Route;
 
-class ProductosController extends BaseController
+class ProductosController
 {
 	public function todos()
 	{
 		$producto = new Producto;
 		$productos = $producto->todos();
-
 		View::renderJson($productos);
 	}
 

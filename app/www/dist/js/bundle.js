@@ -170,7 +170,7 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 })
 
 // Definimos la constante con la ruta de la api.
-.constant('API_SERVER', 'http://localhost/app/api');
+.constant('API_SERVER', 'http://localhost/app/api/public');
 
 // La presencia del segundo parámetro del .module, indica
 // que el módulo se está creando.
@@ -386,7 +386,8 @@ angular.module('dcPets.services')
 			userData 	= null;
 
 		function login(user) {
-			return $http.post(API_SERVER + '/login.php', user).then(function(response) {
+			//return $http.post(API_SERVER + '/login.php', user).then(function(response) {
+			return $http.post(API_SERVER + '/login', user).then(function(response) {
 				// Vamos a verificar si la petición del
 				// login tuvo éxito o no.
 				let responsePayload = response.data;
@@ -468,12 +469,12 @@ angular.module('dcPets.services')
 		// debemos retornar como un objeto.
 		return {
 			todos: function() {
-				// return $http.get(API_SERVER + '/productos');
-				return $http.get(API_SERVER + '/productos.php');
+				return $http.get(API_SERVER + '/productos');
+				//return $http.get(API_SERVER + '/productos.php');
 			},
 			uno: function(id) {
-				// return $http.get(API_SERVER + '/productos/' + id);
-				return $http.get(API_SERVER + '/productos-detalle.php?id=' + id);
+				return $http.get(API_SERVER + '/productos/' + id);
+				//return $http.get(API_SERVER + '/productos-detalle.php?id=' + id);
 			},
 			crear: function(datos) {
 				// return $http.post(API_SERVER + '/productos', datos);

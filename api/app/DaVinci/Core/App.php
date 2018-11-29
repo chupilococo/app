@@ -48,7 +48,9 @@ class App
             $controller = Route::getController($this->request->getMethod(), $this->request->getRequestedUrl());
             $this->executeController($controller);
         } else {
-            throw new \Exception("No existe la ruta especificada.");
+            throw new \Exception("No existe la ruta especificada.". $this->request->getRequestedUrl());
+
+
             // Opcionalmente, podemos directamente llamar a una página que muestre un error 404 o una página
             // template que diga que el recurso no se encontró.
         }

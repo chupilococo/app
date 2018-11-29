@@ -43,12 +43,12 @@ class PeliculasController
 			'pelicula' => $pelicula
 		]);*/
 	}
-
+/*
 	public function formNueva()
 	{
 		View::render('peliculas/form-nueva');
 	}
-
+*/
 	public function grabar()
 	{
 		// TODO: Validar :)
@@ -62,16 +62,6 @@ class PeliculasController
 			'descripcion' 	=> $_POST['descripcion'],
 		]);
 
-		// "Mostrar (via View)" o redireccionar?
-		// View::render('peliculas/exito');
-		// Toda página a la que se ingresa por POST,
-		// _siempre_ debe redireccionar a otra 
-		// pantalla.
-		// App::redirect('peliculas/' . $peli->id_pelicula);
-
-		// Guardamos en una variable de sesión
-		// el mensaje de éxito para mostrar en la
-		// otra pantalla.
 		$_SESSION['mensaje'] = "La película se creó exitosamente! :D";
 
 		App::redirect('peliculas');

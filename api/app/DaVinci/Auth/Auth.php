@@ -44,11 +44,13 @@ class Auth
 				];
 			} else {
 				// :(
-				return false;
+				//return false;
+				return "la pass esta mal";
 			}
 		} else {
 			// El usuario no existe... :(
-			return false;
+			//return false;
+            return "el usuario esta mal";
 		}
 	}
 
@@ -166,13 +168,6 @@ class Auth
 	 */
 	public static function isLogged()
 	{
-		if(isset($_SESSION['id_user'])) {
-			return true;
-		} else {
-			return false;
-		}
-
-		// Más corto:
-		// return isset($_SESSION['id_user']);
+		return isset($_SESSION['id_user']);
 	}
 }
