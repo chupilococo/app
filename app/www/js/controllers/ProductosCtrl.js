@@ -3,7 +3,7 @@
 angular.module('dcPets.controllers')
 .controller('ProductosCtrl', [
 	'$scope',
-	// 'Producto' sale del servicio "Producto.js".
+	// 'Producto' sale del servicio "Mascotas.js".
 	'Producto',
 	function($scope, Producto) {
 		// $scope es el servicio que sirve para vincular los datos y
