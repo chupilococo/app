@@ -4,7 +4,18 @@
 // módulo existente.
 angular.module('dcPets.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope, Mascota) {
+
+    $scope.mascotas = [];
+    $scope.$on('$ionicView.beforeEnter', function() {
+      console.log('entroa aca');
+        Mascota.todos()
+            .then(function(response) {
+                $scope.mascotas = response.data;
+                console.log(' esta es la respuesta',$scope.mascotas);
+            });
+    });
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

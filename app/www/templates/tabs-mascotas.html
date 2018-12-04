@@ -14,6 +14,12 @@ de la directiva ion-nav-bar. -->
 				<h3>{{ mascota.nombre }}</h3>
 				<p>$ {{ mascota.precio }}</p>
 				<p>{{ mascota.marca }}</p>
+				<ion-option-button class="button-assertive" ng-click="downvote(mascota.id_mascota)">
+					No me Gusta
+				</ion-option-button>
+				<ion-option-button class="button-balanced" ng-click="upvote(mascota.id_mascota)">
+					Me Encanta
+				</ion-option-button>
 			</ion-item>
 		</ion-list>
 	</ion-content>

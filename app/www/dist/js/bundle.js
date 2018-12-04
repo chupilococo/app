@@ -128,7 +128,18 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 // módulo existente.
 angular.module('dcPets.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope, Mascota) {
+
+    $scope.mascotas = [];
+    $scope.$on('$ionicView.beforeEnter', function() {
+      console.log('entroa aca');
+        Mascota.todos()
+            .then(function(response) {
+                $scope.mascotas = response.data;
+                console.log(' esta es la respuesta',$scope.mascotas);
+            });
+    });
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -202,7 +213,13 @@ angular.module('dcPets.controllers')
 			}, function() {
 				alert("TODO MAL AAAHHHHHH");
 			});
-	    });		
+	    });
+        $scope.upvote=function(id){
+            console.log('se voto por la mascota '+id);
+        };
+        $scope.downvote=function(id){
+            console.log('se desvoto por la mascota '+id);
+        };
 	}
 ]);
 angular.module('dcPets.controllers')

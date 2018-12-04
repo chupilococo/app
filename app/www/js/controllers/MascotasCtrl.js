@@ -12,6 +12,12 @@ angular.module('dcPets.controllers')
 			}, function() {
 				alert("TODO MAL AAAHHHHHH");
 			});
-	    });		
+	    });
+        $scope.upvote=function(id){
+            console.log('se voto por la mascota '+id);
+        };
+        $scope.downvote=function(id){
+            console.log('se desvoto por la mascota '+id);
+        };
 	}
 ]);
