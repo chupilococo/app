@@ -40,7 +40,7 @@ class MascotasController
 		} // EZ
 
 		$userId = $tokenData['id'];*/
-		$userId = $this->checkUserIsLogged();
+//		$userId = $this->checkUserIsLogged();
 
 		$input = file_get_contents('php://input');
 		$postData = json_decode($input, true);
@@ -63,7 +63,7 @@ class MascotasController
 				'msg' => 'Mascota grabado exitosamente.',
 				'data' => $postData
 			]);
-		} catch(Exception $e) {
+		} catch(\Exception $e) {
 			// Todo mal :(
 			View::renderJson([
 				'status' => 0,

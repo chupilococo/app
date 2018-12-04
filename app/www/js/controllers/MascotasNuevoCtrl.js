@@ -14,8 +14,7 @@ angular.module('dcPets.controllers')
 		};
 
 		$scope.grabar = function(mascota) {
-			// $http.post(API_SERVER + '/mascotas', mascota)
-			Mascota.crear(mascota)
+			 Mascota.crear(mascota)
 				.then(function(response) {
 					let responseInfo = response.data;
 					if(responseInfo.status == 1) {

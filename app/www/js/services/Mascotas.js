@@ -16,7 +16,7 @@ angular.module('dcPets.services')
 				return $http.get(API_SERVER + '/mascotas/' + id);
 			},
 			crear: function(datos) {
-				return $http.post(API_SERVER + '/mascotas-grabar.php', datos, {
+				return $http.post(API_SERVER + '/mascotas', datos, {
 					headers: {
 						'X-Token': Auth.getToken()
 					}

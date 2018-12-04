@@ -242,8 +242,7 @@ angular.module('dcPets.controllers')
 		};
 
 		$scope.grabar = function(mascota) {
-			// $http.post(API_SERVER + '/mascotas', mascota)
-			Mascota.crear(mascota)
+			 Mascota.crear(mascota)
 				.then(function(response) {
 					let responseInfo = response.data;
 					if(responseInfo.status == 1) {
@@ -334,7 +333,7 @@ angular.module('dcPets.services')
 				return $http.get(API_SERVER + '/mascotas/' + id);
 			},
 			crear: function(datos) {
-				return $http.post(API_SERVER + '/mascotas-grabar.php', datos, {
+				return $http.post(API_SERVER + '/mascotas', datos, {
 					headers: {
 						'X-Token': Auth.getToken()
 					}
