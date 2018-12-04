@@ -237,15 +237,6 @@ angular.module('dcPets.controllers')
 		};
 	}
 ]);
-angular.module('dcPets.controllers')
-.controller('PerfilCtrl', [
-	'$scope',
-	'Auth',
-	function($scope, $ionicPopup, $state, Auth) {
-		$scope.perfil = {
-		};
-	}
-]);
 // Agregamos un nuevo controller al módulo de controllers que ionic
 // definió ('dcPets.controllers').
 angular.module('dcPets.controllers')
@@ -331,6 +322,15 @@ angular.module('dcPets.controllers')
 					}
 				});
 		}; // EZ PZ - Se pronuncia: "Easy peasy".
+	}
+]);
+angular.module('dcPets.controllers')
+.controller('PerfilCtrl', [
+	'$scope',
+	'Auth',
+	function($scope, $ionicPopup, $state, Auth) {
+		$scope.perfil = {
+		};
 	}
 ]);
 angular.module('dcPets.services')
