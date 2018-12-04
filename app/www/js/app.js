@@ -59,21 +59,21 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
         }
       }
     })
-    .state('tab.productos', {
-        url: '/productos',
+    .state('tab.mascotas', {
+        url: '/mascotas',
         views: {
-          'tab-productos': {
-            templateUrl: 'templates/tabs-productos.html',
-            controller: 'ProductosCtrl'
+          'tab-mascotas': {
+            templateUrl: 'templates/tabs-mascotas.html',
+            controller: 'MascotasCtrl'
           }
         }
     })
-    .state('tab.productos-nuevo', {
-      url: '/productos/nuevo',
+    .state('tab.mascotas-nuevo', {
+      url: '/mascotas/nuevo',
       views: {
-        'tab-productos': {
-          templateUrl: 'templates/tabs-productos-nuevo.html',
-          controller: 'ProductosNuevoCtrl'
+        'tab-mascotas': {
+          templateUrl: 'templates/tabs-mascotas-nuevo.html',
+          controller: 'MascotasNuevoCtrl'
         }
       },
       data: {
@@ -95,12 +95,12 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 
 
 
-    .state('tab.productos-detalle', {
-      url: '/productos/:id',
+    .state('tab.mascotas-detalle', {
+      url: '/mascotas/:id',
       views: {
-        'tab-productos': {
-          templateUrl: 'templates/tabs-productos-detalle.html',
-          controller: 'ProductosDetalleCtrl'
+        'tab-mascotas': {
+          templateUrl: 'templates/tabs-mascotas-detalle.html',
+          controller: 'MascotasDetalleCtrl'
         }
       }
     })

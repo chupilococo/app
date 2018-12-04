@@ -1,11 +1,11 @@
 angular.module('dcPets.controllers')
-.controller('ProductosDetalleCtrl', [
+.controller('MascotasDetalleCtrl', [
 	'$scope',
 	'$stateParams',
-	'Producto',
-	function($scope, $stateParams, Producto) {
-		$scope.producto = {
-			id_producto: null,
+	'Mascota',
+	function($scope, $stateParams, Mascota) {
+		$scope.mascota = {
+			id_mascota: null,
 			nombre: null,
 			categoria: null,
 			marca: null,
@@ -13,10 +13,9 @@ angular.module('dcPets.controllers')
 			descripcion: null
 		};
 
-		// $http.get(API_SERVER + '/productos/' + $stateParams.id)
-		Producto.uno($stateParams.id)
+		Mascota.uno($stateParams.id)
 			.then(function(response) {
-				$scope.producto = response.data;
-			}); // papita :3
+				$scope.mascota = response.data;
+			});
 	}
 ]);

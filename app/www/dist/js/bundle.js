@@ -59,21 +59,21 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
         }
       }
     })
-    .state('tab.productos', {
-        url: '/productos',
+    .state('tab.mascotas', {
+        url: '/mascotas',
         views: {
-          'tab-productos': {
-            templateUrl: 'templates/tabs-productos.html',
-            controller: 'ProductosCtrl'
+          'tab-mascotas': {
+            templateUrl: 'templates/tabs-mascotas.html',
+            controller: 'MascotasCtrl'
           }
         }
     })
-    .state('tab.productos-nuevo', {
-      url: '/productos/nuevo',
+    .state('tab.mascotas-nuevo', {
+      url: '/mascotas/nuevo',
       views: {
-        'tab-productos': {
-          templateUrl: 'templates/tabs-productos-nuevo.html',
-          controller: 'ProductosNuevoCtrl'
+        'tab-mascotas': {
+          templateUrl: 'templates/tabs-mascotas-nuevo.html',
+          controller: 'MascotasNuevoCtrl'
         }
       },
       data: {
@@ -95,12 +95,12 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 
 
 
-    .state('tab.productos-detalle', {
-      url: '/productos/:id',
+    .state('tab.mascotas-detalle', {
+      url: '/mascotas/:id',
       views: {
-        'tab-productos': {
-          templateUrl: 'templates/tabs-productos-detalle.html',
-          controller: 'ProductosDetalleCtrl'
+        'tab-mascotas': {
+          templateUrl: 'templates/tabs-mascotas-detalle.html',
+          controller: 'MascotasDetalleCtrl'
         }
       }
     })
@@ -155,56 +155,7 @@ angular.module('dcPets.controllers', [])
   };
 });
 
-angular.module('dcPets.services', [])
-
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
-  };
-});
+angular.module('dcPets.services', []);
 
 angular.module('dcPets.controllers')
 .controller('LoginCtrl', [
@@ -225,7 +176,7 @@ angular.module('dcPets.controllers')
 						title: 'Éxito',
 						template: 'Bienvenido/a! Disfrutá de la app :)'
 					}).then(function() {
-						$state.go('tab.productos');
+						$state.go('tab.mascotas');
 					});
 				} else {
 					$ionicPopup.alert({
@@ -237,41 +188,31 @@ angular.module('dcPets.controllers')
 		};
 	}
 ]);
-// Agregamos un nuevo controller al módulo de controllers que ionic
-// definió ('dcPets.controllers').
 angular.module('dcPets.controllers')
-.controller('ProductosCtrl', [
+.controller('MascotasCtrl', [
 	'$scope',
-	// 'Producto' sale del servicio "Mascotas.js".
-	'Producto',
-	function($scope, Producto) {
-		// $scope es el servicio que sirve para vincular los datos y
-		// funciones que queremos que estén disponibles en la vista.
-		$scope.productos = [];
-
-		// Justo de antes de entrar a la vista, le pedimos
-		// que traiga los productos.
+	'Mascota',
+	function($scope, Mascota) {
+		$scope.mascotas = [];
 		$scope.$on('$ionicView.beforeEnter', function() {
-	        Producto.todos()
+	        Mascota.todos()
 			.then(function(response) {
-				// Resolve
 				console.log(response);
-				$scope.productos = response.data;
+				$scope.mascotas = response.data;
 			}, function() {
-				// Reject
 				alert("TODO MAL AAAHHHHHH");
 			});
 	    });		
 	}
 ]);
 angular.module('dcPets.controllers')
-.controller('ProductosDetalleCtrl', [
+.controller('MascotasDetalleCtrl', [
 	'$scope',
 	'$stateParams',
-	'Producto',
-	function($scope, $stateParams, Producto) {
-		$scope.producto = {
-			id_producto: null,
+	'Mascota',
+	function($scope, $stateParams, Mascota) {
+		$scope.mascota = {
+			id_mascota: null,
 			nombre: null,
 			categoria: null,
 			marca: null,
@@ -279,21 +220,20 @@ angular.module('dcPets.controllers')
 			descripcion: null
 		};
 
-		// $http.get(API_SERVER + '/productos/' + $stateParams.id)
-		Producto.uno($stateParams.id)
+		Mascota.uno($stateParams.id)
 			.then(function(response) {
-				$scope.producto = response.data;
-			}); // papita :3
+				$scope.mascota = response.data;
+			});
 	}
 ]);
 angular.module('dcPets.controllers')
-.controller('ProductosNuevoCtrl', [
+.controller('MascotasNuevoCtrl', [
 	'$scope',
 	'$state',
 	'$ionicPopup',
-	'Producto',
-	function($scope, $state, $ionicPopup, Producto) {
-		$scope.producto = {
+	'Mascota',
+	function($scope, $state, $ionicPopup, Mascota) {
+		$scope.mascota = {
 			nombre		: null,
 			id_categoria: null,
 			id_marca	: null,
@@ -301,18 +241,18 @@ angular.module('dcPets.controllers')
 			descripcion	: null
 		};
 
-		$scope.grabar = function(producto) {
-			// $http.post(API_SERVER + '/productos', producto)
-			Producto.crear(producto)
+		$scope.grabar = function(mascota) {
+			// $http.post(API_SERVER + '/mascotas', mascota)
+			Mascota.crear(mascota)
 				.then(function(response) {
 					let responseInfo = response.data;
 					if(responseInfo.status == 1) {
 						$ionicPopup.alert({
 							title: 'Éxito!',
-							template: 'El producto fue creado exitosamente! :D'
+							template: 'El mascota fue creado exitosamente! :D'
 						}).then(function() {
 							// Lo redireccionamos al listado, pero luego de que cierren el mensaje.
-							$state.go('tab.productos');
+							$state.go('tab.mascotas');
 						});
 					} else if(responseInfo.status == 0) {
 						$ionicPopup.alert({
@@ -380,7 +320,7 @@ angular.module('dcPets.services')
 // nuevo servicio.
 angular.module('dcPets.services')
 // .factory es el método para crear nuevos servicios.
-.factory('Producto', [
+.factory('Mascota', [
 	'$http',
 	'API_SERVER',
 	'Auth',
@@ -388,13 +328,13 @@ angular.module('dcPets.services')
 
 		return {
 			todos: function() {
-				return $http.get(API_SERVER + '/productos');
+				return $http.get(API_SERVER + '/mascotas');
 			},
 			uno: function(id) {
-				return $http.get(API_SERVER + '/productos/' + id);
+				return $http.get(API_SERVER + '/mascotas/' + id);
 			},
 			crear: function(datos) {
-				return $http.post(API_SERVER + '/productos-grabar.php', datos, {
+				return $http.post(API_SERVER + '/mascotas-grabar.php', datos, {
 					headers: {
 						'X-Token': Auth.getToken()
 					}

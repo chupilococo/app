@@ -1,11 +1,11 @@
 angular.module('dcPets.controllers')
-.controller('ProductosNuevoCtrl', [
+.controller('MascotasNuevoCtrl', [
 	'$scope',
 	'$state',
 	'$ionicPopup',
-	'Producto',
-	function($scope, $state, $ionicPopup, Producto) {
-		$scope.producto = {
+	'Mascota',
+	function($scope, $state, $ionicPopup, Mascota) {
+		$scope.mascota = {
 			nombre		: null,
 			id_categoria: null,
 			id_marca	: null,
@@ -13,18 +13,18 @@ angular.module('dcPets.controllers')
 			descripcion	: null
 		};
 
-		$scope.grabar = function(producto) {
-			// $http.post(API_SERVER + '/productos', producto)
-			Producto.crear(producto)
+		$scope.grabar = function(mascota) {
+			// $http.post(API_SERVER + '/mascotas', mascota)
+			Mascota.crear(mascota)
 				.then(function(response) {
 					let responseInfo = response.data;
 					if(responseInfo.status == 1) {
 						$ionicPopup.alert({
 							title: 'Éxito!',
-							template: 'El producto fue creado exitosamente! :D'
+							template: 'El mascota fue creado exitosamente! :D'
 						}).then(function() {
 							// Lo redireccionamos al listado, pero luego de que cierren el mensaje.
-							$state.go('tab.productos');
+							$state.go('tab.mascotas');
 						});
 					} else if(responseInfo.status == 0) {
 						$ionicPopup.alert({

@@ -2,7 +2,7 @@
 // nuevo servicio.
 angular.module('dcPets.services')
 // .factory es el método para crear nuevos servicios.
-.factory('Producto', [
+.factory('Mascota', [
 	'$http',
 	'API_SERVER',
 	'Auth',
@@ -10,13 +10,13 @@ angular.module('dcPets.services')
 
 		return {
 			todos: function() {
-				return $http.get(API_SERVER + '/productos');
+				return $http.get(API_SERVER + '/mascotas');
 			},
 			uno: function(id) {
-				return $http.get(API_SERVER + '/productos/' + id);
+				return $http.get(API_SERVER + '/mascotas/' + id);
 			},
 			crear: function(datos) {
-				return $http.post(API_SERVER + '/productos-grabar.php', datos, {
+				return $http.post(API_SERVER + '/mascotas-grabar.php', datos, {
 					headers: {
 						'X-Token': Auth.getToken()
 					}

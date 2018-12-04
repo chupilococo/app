@@ -86,22 +86,22 @@ $descripcion 	= mysqli_real_escape_string($db, $postData['descripcion']); // :)
 
 // TODO: Validar ;)
 
-$query = "INSERT INTO productos (nombre, precio, id_marca, id_categoria, descripcion)
+$query = "INSERT INTO mascotas (nombre, precio, id_marca, id_categoria, descripcion)
 		VALUES ('$nombre', '$precio', '$id_marca', '$id_categoria', '$descripcion')";
 
 $exito = mysqli_query($db, $query);
 
 if($exito) {
-	$postData['id_producto'] = mysqli_insert_id($db);
+	$postData['id_mascota'] = mysqli_insert_id($db);
 	echo json_encode([
 		'status' => 1,
-		'msg' => 'Producto grabado exitosamente.',
+		'msg' => 'Mascota grabado exitosamente.',
 		'data' => $postData
 	]);
 } else {
 	echo json_encode([
 		'status' => 0,
-		// 'msg' => 'Error al grabar el producto en la base de datos.'
-		'msg' => 'Oops! Ocurrió un problema al querer grabar los datos del nuevo producto. Probá de nuevo más tarde o comunicate con nosotros :)'
+		// 'msg' => 'Error al grabar el mascota en la base de datos.'
+		'msg' => 'Oops! Ocurrió un problema al querer grabar los datos del nuevo mascota. Probá de nuevo más tarde o comunicate con nosotros :)'
 	]);
 }

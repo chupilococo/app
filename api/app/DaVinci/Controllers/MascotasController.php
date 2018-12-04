@@ -1,17 +1,17 @@
 <?php
 namespace DaVinci\Controllers;
 
-use DaVinci\Models\Producto;
+use DaVinci\Models\Mascota;
 use DaVinci\Core\View;
 use DaVinci\Core\Route;
 
-class ProductosController
+class MascotasController
 {
 	public function todos()
 	{
-		$producto = new Producto;
-		$productos = $producto->todos();
-		View::renderJson($productos);
+		$mascota = new Mascota;
+		$mascotas = $mascota->todos();
+		View::renderJson($mascotas);
 	}
 
 	public function detalle()
@@ -19,10 +19,10 @@ class ProductosController
 		$params = Route::getUrlParameters();
 		$id = $params['id'];
 
-		$producto = new Producto;
-		$producto->traerPorId($id);
+		$mascota = new Mascota;
+		$mascota->traerPorId($id);
 
-		View::renderJson($producto);
+		View::renderJson($mascota);
 	}
 
 	public function crear()
@@ -48,8 +48,8 @@ class ProductosController
 		// TODO: Validar :)
 
 		try {
-			$producto = new Producto;
-			$producto->crear([
+			$mascota = new Mascota;
+			$mascota->crear([
 				'nombre' 		=> $postData['nombre'],
 				'precio' 		=> $postData['precio'],
 				'id_marca' 		=> $postData['id_marca'],
@@ -60,14 +60,14 @@ class ProductosController
 			// Todo ok!
 			View::renderJson([
 				'status' => 1,
-				'msg' => 'Producto grabado exitosamente.',
+				'msg' => 'Mascota grabado exitosamente.',
 				'data' => $postData
 			]);
 		} catch(Exception $e) {
 			// Todo mal :(
 			View::renderJson([
 				'status' => 0,
-				'msg' => 'Oops! Ocurrió un problema al querer grabar los datos del nuevo producto. Probá de nuevo más tarde o comunicate con nosotros :)'
+				'msg' => 'Oops! Ocurrió un problema al querer grabar los datos del nuevo mascota. Probá de nuevo más tarde o comunicate con nosotros :)'
 			]);
 		}
 	}
@@ -84,9 +84,9 @@ class ProductosController
 		// TODO: Validar :)
 
 		try {
-			$producto = new Producto;
-			$producto->editar([
-				'id_producto' 	=> $id,
+			$mascota = new Mascota;
+			$mascota->editar([
+				'id_mascota' 	=> $id,
 				'nombre' 		=> $putData['nombre'],
 				'precio' 		=> $putData['precio'],
 				'id_marca' 		=> $putData['id_marca'],
@@ -97,14 +97,14 @@ class ProductosController
 			// Todo ok!
 			View::renderJson([
 				'status' => 1,
-				'msg' => 'Producto editado exitosamente.',
-				'data' => $producto
+				'msg' => 'Mascota editado exitosamente.',
+				'data' => $mascota
 			]);
 		} catch(Exception $e) {
 			// Todo mal :(
 			View::renderJson([
 				'status' => 0,
-				'msg' => 'Oops! Ocurrió un problema al querer editar los datos del producto. Probá de nuevo más tarde o comunicate con nosotros :)'
+				'msg' => 'Oops! Ocurrió un problema al querer editar los datos del mascota. Probá de nuevo más tarde o comunicate con nosotros :)'
 			]);
 		}
 	}
@@ -117,20 +117,20 @@ class ProductosController
 		// TODO: Validar :)
 
 		try {
-			$producto = new Producto;
-			$producto->eliminar($id);
+			$mascota = new Mascota;
+			$mascota->eliminar($id);
 
 			// Todo ok!
 			View::renderJson([
 				'status' => 1,
-				'msg' => 'Producto eliminado exitosamente.',
-				// 'data' => $producto
+				'msg' => 'Mascota eliminado exitosamente.',
+				// 'data' => $mascota
 			]);
 		} catch(Exception $e) {
 			// Todo mal :(
 			View::renderJson([
 				'status' => 0,
-				'msg' => 'Oops! Ocurrió un problema al querer eliminar el producto. Probá de nuevo más tarde o comunicate con nosotros :)'
+				'msg' => 'Oops! Ocurrió un problema al querer eliminar el mascota. Probá de nuevo más tarde o comunicate con nosotros :)'
 			]);
 		}
 	}

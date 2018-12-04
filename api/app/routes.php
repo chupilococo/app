@@ -10,9 +10,9 @@ use DaVinci\Core\Route;
 
 Route::add('GET', '/perfil', 'UsuarioController@perfil');
 Route::add('POST', '/login', 'AuthController@login');
-Route::add('GET', '/productos', 'ProductosController@todos');
-Route::add('GET', '/productos/{id}', 'ProductosController@detalle');
+Route::add('GET', '/mascotas', 'MascotasController@todos');
+Route::add('GET', '/mascotas/{id}', 'MascotasController@detalle');
 
-Route::add('POST', '/productos', 'ProductosController@crear');
-Route::add('PUT', '/productos/{id}', 'ProductosController@editar');
-Route::add('DELETE', '/productos/{id}', 'ProductosController@eliminar');
+Route::add('POST', '/mascotas', 'MascotasController@crear');
+Route::add('PUT', '/mascotas/{id}', 'MascotasController@editar');
+Route::add('DELETE', '/mascotas/{id}', 'MascotasController@eliminar');

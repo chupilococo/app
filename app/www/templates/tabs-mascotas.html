@@ -1,0 +1,20 @@
+<!-- ion-view permite controlar desde esta subvista los detalles
+de la directiva ion-nav-bar. -->
+<ion-view view-title="Mascotas">
+	<ion-nav-buttons side="secondary">
+		<a class="button" href="#/tab/mascotas/nuevo">Nuevo</a>
+	</ion-nav-buttons>
+	<!-- ion-content define el contenido a mostrar en el ion-nav-view. -->
+	<ion-content>
+		<div class="padding">
+			<h2>Listado de Mascotas</h2>
+		</div>
+		<ion-list>
+			<ion-item ng-repeat="mascota in mascotas" href="#/tab/mascotas/{{ mascota.id_mascota }}">
+				<h3>{{ mascota.nombre }}</h3>
+				<p>$ {{ mascota.precio }}</p>
+				<p>{{ mascota.marca }}</p>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
