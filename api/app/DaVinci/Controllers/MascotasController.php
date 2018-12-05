@@ -14,6 +14,15 @@ class MascotasController
 		View::renderJson($mascotas);
 	}
 
+    public function getByPerfil()
+    {
+        $params = Route::getUrlParameters();
+        $id = $params['id'];
+        $mascota = new Mascota;
+        $mascotas = $mascota->getByOwner($id);
+        View::renderJson($mascotas);
+    }
+
 	public function detalle()
 	{
 		$params = Route::getUrlParameters();

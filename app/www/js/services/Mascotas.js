@@ -9,6 +9,13 @@ angular.module('dcPets.services')
 			todos: function() {
 				return $http.get(API_SERVER + '/mascotas');
 			},
+            getByPerfil:function (id) {
+				return $http.get(API_SERVER+ '/mascotas/perfil/'+id,{
+                        headers: {
+                            'X-Token': Auth.getToken()
+                        }
+                    });
+            },
 			uno: function(id) {
 				return $http.get(API_SERVER + '/mascotas/' + id);
 			},

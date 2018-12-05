@@ -52,6 +52,28 @@ class Mascota implements JsonSerializable
 	}
 
     /**
+     * Obtiene los registros de la base de datos filtrados por Owner
+     * @return array|Mascota[]
+     */
+    public function getByOwner($id)
+    {
+        $db = DBConnection::getConnection();
+        $query = "SELECT * FROM mascotas m
+                  WHERE owner=?
+                  ORDER BY m.id_mascota";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$id]);
+        $salida = [];
+        while($fila = $stmt->fetch()) {
+            $masc = new Mascota;
+            $masc->cargarDatosDeArray($fila);
+            $salida[] = $masc;
+        }
+
+        return $salida;
+    }
+
+    /**
      * Carga las propiedades del Mascota por su $id.
      *
      * @param int $id

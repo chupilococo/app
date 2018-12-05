@@ -17,7 +17,9 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
         $ionicPopup.alert({
           title: 'Acceso denegado',
           template: 'Tenés que estar logueado para poder acceder a esta pantalla.'
-        })
+        }).then(function() {
+                $state.go('tab.login');
+            })
       }
     }else if(toState.data != undefined && toState.data.requiresGuest == true) {
       if(Auth.isLogged()) {
@@ -55,7 +57,7 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
     .state('tab.mascotas-nuevo', {
       url: '/mascotas/nuevo',
       views: {
-        'tab-mascotas': {
+          'tab-perfil': {
           templateUrl: 'templates/tabs-mascotas-nuevo.html',
           controller: 'MascotasNuevoCtrl'
         }
@@ -122,89 +124,6 @@ angular.module('dcPets.controllers', [])
 });
 angular.module('dcPets.services', []);
 
-angular.module('dcPets.services')
-.factory('Auth', [
-	'$http',
-	'API_SERVER',
-	function($http, API_SERVER) {
-		let token 		= null,
-			userData 	= null;
-
-		function login(user) {
-			return $http.post(API_SERVER + '/login', user).then(function(response) {
-				let responsePayload = response.data;
-				if(responsePayload.status == 1) {
-					token = responsePayload.token;
-					userData = {
-						id		: responsePayload.id,
-						usuario : responsePayload.usuario
-					};
-					return true;
-				} else {
-					return false;
-				}
-			});
-		}
-
-		function isLogged() {
-			if(token != null) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		function getToken() {
-			return token;
-		}
-
-		return {
-			login: login,
-			isLogged: isLogged,
-			getToken: getToken,
-		};
-	}
-]);
-angular.module('dcPets.services')
-.factory('Mascota', [
-	'$http',
-	'API_SERVER',
-	'Auth',
-	function($http, API_SERVER, Auth) {
-
-		return {
-			todos: function() {
-				return $http.get(API_SERVER + '/mascotas');
-			},
-			uno: function(id) {
-				return $http.get(API_SERVER + '/mascotas/' + id);
-			},
-			crear: function(datos) {
-				return $http.post(API_SERVER + '/mascotas', datos, {
-					headers: {
-						'X-Token': Auth.getToken()
-					}
-				})
-                },
-            upvote:function(id) {
-				console.log('upvote:',id);
-                return $http.put(API_SERVER + '/mascotas/upvote/'+id,null, {
-                    headers: {
-                        'X-Token': Auth.getToken()
-                    }
-				});
-			},
-            downvote:function(id) {
-				console.log('downvote:',id);
-                return $http.put(API_SERVER + '/mascotas/downpdate/'+id,null,{
-                     headers: {
-                         'X-Token': Auth.getToken()
-                     }
-				 });
-			}
-		};
-	}
-]);
 angular.module('dcPets.controllers')
 .controller('LoginCtrl', [
 	'$scope',
@@ -224,7 +143,7 @@ angular.module('dcPets.controllers')
 						title: 'Éxito',
 						template: 'Bienvenido/a! Disfrutá de la app :)'
 					}).then(function() {
-						$state.go('tab.mascotas');
+						$state.go('tab.perfil');
 					});
 				} else {
 					$ionicPopup.alert({
@@ -330,10 +249,134 @@ angular.module('dcPets.controllers')
 ]);
 angular.module('dcPets.controllers')
 .controller('PerfilCtrl', [
-	'$scope',
+    '$scope',
+	'$ionicPopup',
+	'$state',
 	'Auth',
-	function($scope, $ionicPopup, $state, Auth) {
-		$scope.perfil = {
+	'Mascota',
+	function($scope, $ionicPopup, $state, Auth,Mascota) {
+        $scope.mascotas = [];
+        $scope.$on('$ionicView.beforeEnter', function() {
+            Mascota.getByPerfil(Auth.getId())
+                .then(function(response) {
+                    $scope.mascotas = response.data;
+                    console.log($scope.mascotas);
+                }, function() {
+                    $ionicPopup.alert({
+                        title: 'Upss',
+                        template: 'Puede que haya habido un error \n' +
+                            'proba de nuevo, en un rato...'
+                    });
+                });
+        });
+        $scope.delete=function () {
+			$ionicPopup.alert(
+				{
+					title:'se borro'
+				}
+			);
+        };
+        $scope.edit=function () {
+			$ionicPopup.alert(
+				{
+					title:'se editara'
+				}
+			);
+        };
+	}
+]);
+angular.module('dcPets.services')
+.factory('Auth', [
+	'$http',
+	'API_SERVER',
+	function($http, API_SERVER) {
+		let token 		= null,
+			userData 	= null;
+
+		function login(user) {
+			return $http.post(API_SERVER + '/login', user).then(function(response) {
+				let responsePayload = response.data;
+				if(responsePayload.status == 1) {
+					token = responsePayload.token;
+					console.log(responsePayload);
+					userData = {
+						id		: responsePayload.user.id,
+						usuario : responsePayload.user.usuario
+					};
+					return true;
+				} else {
+					return false;
+				}
+			});
+		}
+
+		function isLogged() {
+			if(token != null) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function getToken() {
+			return token;
+		}
+		function getId () {
+			console.log(userData);
+			return userData.id;
+        }
+		return {
+			login: login,
+			isLogged: isLogged,
+			getToken: getToken,
+			getId: getId,
+		};
+	}
+]);
+angular.module('dcPets.services')
+.factory('Mascota', [
+	'$http',
+	'API_SERVER',
+	'Auth',
+	function($http, API_SERVER, Auth) {
+
+		return {
+			todos: function() {
+				return $http.get(API_SERVER + '/mascotas');
+			},
+            getByPerfil:function (id) {
+				return $http.get(API_SERVER+ '/mascotas/perfil/'+id,{
+                        headers: {
+                            'X-Token': Auth.getToken()
+                        }
+                    });
+            },
+			uno: function(id) {
+				return $http.get(API_SERVER + '/mascotas/' + id);
+			},
+			crear: function(datos) {
+				return $http.post(API_SERVER + '/mascotas', datos, {
+					headers: {
+						'X-Token': Auth.getToken()
+					}
+				})
+                },
+            upvote:function(id) {
+				console.log('upvote:',id);
+                return $http.put(API_SERVER + '/mascotas/upvote/'+id,null, {
+                    headers: {
+                        'X-Token': Auth.getToken()
+                    }
+				});
+			},
+            downvote:function(id) {
+				console.log('downvote:',id);
+                return $http.put(API_SERVER + '/mascotas/downpdate/'+id,null,{
+                     headers: {
+                         'X-Token': Auth.getToken()
+                     }
+				 });
+			}
 		};
 	}
 ]);

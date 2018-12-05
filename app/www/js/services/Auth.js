@@ -11,9 +11,10 @@ angular.module('dcPets.services')
 				let responsePayload = response.data;
 				if(responsePayload.status == 1) {
 					token = responsePayload.token;
+					console.log(responsePayload);
 					userData = {
-						id		: responsePayload.id,
-						usuario : responsePayload.usuario
+						id		: responsePayload.user.id,
+						usuario : responsePayload.user.usuario
 					};
 					return true;
 				} else {
@@ -33,11 +34,15 @@ angular.module('dcPets.services')
 		function getToken() {
 			return token;
 		}
-
+		function getId () {
+			console.log(userData);
+			return userData.id;
+        }
 		return {
 			login: login,
 			isLogged: isLogged,
 			getToken: getToken,
+			getId: getId,
 		};
 	}
 ]);

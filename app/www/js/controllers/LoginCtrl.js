@@ -17,7 +17,7 @@ angular.module('dcPets.controllers')
 						title: 'Éxito',
 						template: 'Bienvenido/a! Disfrutá de la app :)'
 					}).then(function() {
-						$state.go('tab.mascotas');
+						$state.go('tab.perfil');
 					});
 				} else {
 					$ionicPopup.alert({

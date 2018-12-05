@@ -17,7 +17,9 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
         $ionicPopup.alert({
           title: 'Acceso denegado',
           template: 'Tenés que estar logueado para poder acceder a esta pantalla.'
-        })
+        }).then(function() {
+                $state.go('tab.login');
+            })
       }
     }else if(toState.data != undefined && toState.data.requiresGuest == true) {
       if(Auth.isLogged()) {
@@ -55,7 +57,7 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
     .state('tab.mascotas-nuevo', {
       url: '/mascotas/nuevo',
       views: {
-        'tab-mascotas': {
+          'tab-perfil': {
           templateUrl: 'templates/tabs-mascotas-nuevo.html',
           controller: 'MascotasNuevoCtrl'
         }
