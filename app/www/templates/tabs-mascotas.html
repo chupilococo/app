@@ -12,8 +12,8 @@ de la directiva ion-nav-bar. -->
 		<ion-list>
 			<ion-item ng-repeat="mascota in mascotas" href="#/tab/mascotas/{{ mascota.id_mascota }}">
 				<h3>{{ mascota.nombre }}</h3>
-				<p>$ {{ mascota.precio }}</p>
-				<p>{{ mascota.marca }}</p>
+				<p>{{ mascota.descripcion }}</p>
+				<p>{{ mascota.score }}</p>
 				<ion-option-button class="button-assertive" ng-click="downvote(mascota.id_mascota)">
 					No me Gusta
 				</ion-option-button>

@@ -14,5 +14,7 @@ Route::add('GET', '/mascotas', 'MascotasController@todos');
 Route::add('GET', '/mascotas/{id}', 'MascotasController@detalle');
 
 Route::add('POST', '/mascotas', 'MascotasController@crear');
+Route::add('PUT', '/mascotas/upvote/{id}', 'MascotasController@upvote');
+Route::add('PUT', '/mascotas/downvote/{id}', 'MascotasController@downvote');
 Route::add('PUT', '/mascotas/{id}', 'MascotasController@editar');
 Route::add('DELETE', '/mascotas/{id}', 'MascotasController@eliminar');

@@ -88,10 +88,8 @@ class MascotasController
 			$mascota->editar([
 				'id_mascota' 	=> $id,
 				'nombre' 		=> $putData['nombre'],
-				'precio' 		=> $putData['precio'],
-				'id_marca' 		=> $putData['id_marca'],
-				'id_categoria' 	=> $putData['id_categoria'],
 				'descripcion' 	=> $putData['descripcion'],
+                'imagen'        => $putData['imagen'],
 			]);
 
 			// Todo ok!
@@ -134,4 +132,47 @@ class MascotasController
 			]);
 		}
 	}
+
+	public function upvote (){
+        $params = Route::getUrlParameters();
+        $id = $params['id'];
+        try {
+            $mascota = new Mascota;
+            $mascota->upvote($id);
+
+            // Todo ok!
+            View::renderJson([
+                'status' => 1,
+                'msg' => 'Mascota upvotedada.',
+                'data' => $mascota
+            ]);
+        } catch(Exception $e) {
+            // Todo mal :(
+            View::renderJson([
+                'status' => 0,
+                'msg' => 'Oops! Ocurrió un problema :)'
+            ]);
+        }
+    }
+    public function downvote (){
+        $params = Route::getUrlParameters();
+        $id = $params['id'];
+        try {
+            $mascota = new Mascota;
+            $mascota->downvote($id);
+
+            // Todo ok!
+            View::renderJson([
+                'status' => 1,
+                'msg' => 'Mascota upvotedada.',
+                'data' => $mascota
+            ]);
+        } catch(Exception $e) {
+            // Todo mal :(
+            View::renderJson([
+                'status' => 0,
+                'msg' => 'Oops! Ocurrió un problema :)'
+            ]);
+        }
+    }
 }

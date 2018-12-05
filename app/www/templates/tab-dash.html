@@ -3,9 +3,10 @@
     <h2>Las mascotas <b>Mas  Lindas</b></h2>
     <p>Acá vas a Ver las mascotas mas lindas de todas AhRre</p>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="mascota in mascotas" type="item-text-wrap" href="#/tab/mascotas/{{mascota.id_mascota}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="mascota in mascotas | orderBy:'-score'|limitTo:5" type="item-text-wrap" >
         <h2>{{mascota.nombre}}</h2>
         <p>{{mascota.descripcion}}</p>
+        <p>{{mascota.score}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

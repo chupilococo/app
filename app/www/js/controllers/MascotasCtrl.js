@@ -9,6 +9,7 @@ angular.module('dcPets.controllers')
 	        Mascota.todos()
 			.then(function(response) {
 				$scope.mascotas = response.data;
+				console.log($scope.mascotas);
 			}, function() {
                 $ionicPopup.alert({
                     title: 'Upss',
@@ -18,9 +19,11 @@ angular.module('dcPets.controllers')
 			});
 	    });
         $scope.upvote=function(id){
-            console.log('se voto por la mascota '+id);
+            Mascota.upvote(id);
+        	console.log('se voto por la mascota '+id);
         };
         $scope.downvote=function(id){
+        	Mascota.downvote(id);
             console.log('se desvoto por la mascota '+id);
         };
 	}

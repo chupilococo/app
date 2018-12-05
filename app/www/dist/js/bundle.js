@@ -1,23 +1,16 @@
 angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
-// funcionalidades del dispositivo están disponibles.
 .run(function($ionicPlatform, $rootScope, $ionicPopup,$state, Auth) {
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
   });
   $rootScope.$on('$stateChangeStart', function(event, toState){
     console.log("Cambiando la vista a : ", toState);
-
-
     if(toState.data != undefined && toState.data.requiresAuth == true) {
       if(!Auth.isLogged()) {
         event.preventDefault();
@@ -34,16 +27,7 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
     }
   });
 })
-
-// Config permite definir configuraciones de los módulos (providers).
-// Por ejemplo, configurar el módulo de rutas.
-// Ionic no utiliza ngRoute, sino el ui-router.
-// Este módulo contiene varias mejoras con respecto a
-// ngRoute. Principalmente, permite el uso de subvistas.
-// Una cosa a notar, es que con el ngRoute, utilizaban "routes".
-// Con el ui-router, se habla de "states".
 .config(function($stateProvider, $urlRouterProvider) {
-
   $stateProvider
     .state('tab', {
       url: '/tab',
@@ -92,9 +76,6 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
               }
           }
       })
-
-
-
     .state('tab.mascotas-detalle', {
       url: '/mascotas/:id',
       views: {
@@ -120,7 +101,6 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 
   $urlRouterProvider.otherwise('/tab/dash');
 })
-
 .constant('API_SERVER', 'http://localhost/app/api/public')
 .constant('NO_IMG', 'img/perro_404.png');
 // La presencia del segundo parámetro del .module, indica
@@ -133,16 +113,98 @@ angular.module('dcPets.controllers', [])
 
     $scope.mascotas = [];
     $scope.$on('$ionicView.beforeEnter', function() {
-      console.log('entroa aca');
         Mascota.todos()
             .then(function(response) {
                 $scope.mascotas = response.data;
-                console.log(' esta es la respuesta',$scope.mascotas);
+                // console.log(' esta es la respuesta',$scope.mascotas);
             });
     });
 });
 angular.module('dcPets.services', []);
 
+angular.module('dcPets.services')
+.factory('Auth', [
+	'$http',
+	'API_SERVER',
+	function($http, API_SERVER) {
+		let token 		= null,
+			userData 	= null;
+
+		function login(user) {
+			return $http.post(API_SERVER + '/login', user).then(function(response) {
+				let responsePayload = response.data;
+				if(responsePayload.status == 1) {
+					token = responsePayload.token;
+					userData = {
+						id		: responsePayload.id,
+						usuario : responsePayload.usuario
+					};
+					return true;
+				} else {
+					return false;
+				}
+			});
+		}
+
+		function isLogged() {
+			if(token != null) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function getToken() {
+			return token;
+		}
+
+		return {
+			login: login,
+			isLogged: isLogged,
+			getToken: getToken,
+		};
+	}
+]);
+angular.module('dcPets.services')
+.factory('Mascota', [
+	'$http',
+	'API_SERVER',
+	'Auth',
+	function($http, API_SERVER, Auth) {
+
+		return {
+			todos: function() {
+				return $http.get(API_SERVER + '/mascotas');
+			},
+			uno: function(id) {
+				return $http.get(API_SERVER + '/mascotas/' + id);
+			},
+			crear: function(datos) {
+				return $http.post(API_SERVER + '/mascotas', datos, {
+					headers: {
+						'X-Token': Auth.getToken()
+					}
+				})
+                },
+            upvote:function(id) {
+				console.log('upvote:',id);
+                return $http.put(API_SERVER + '/mascotas/upvote/'+id,null, {
+                    headers: {
+                        'X-Token': Auth.getToken()
+                    }
+				});
+			},
+            downvote:function(id) {
+				console.log('downvote:',id);
+                return $http.put(API_SERVER + '/mascotas/downpdate/'+id,null,{
+                     headers: {
+                         'X-Token': Auth.getToken()
+                     }
+				 });
+			}
+		};
+	}
+]);
 angular.module('dcPets.controllers')
 .controller('LoginCtrl', [
 	'$scope',
@@ -185,6 +247,7 @@ angular.module('dcPets.controllers')
 	        Mascota.todos()
 			.then(function(response) {
 				$scope.mascotas = response.data;
+				console.log($scope.mascotas);
 			}, function() {
                 $ionicPopup.alert({
                     title: 'Upss',
@@ -194,9 +257,11 @@ angular.module('dcPets.controllers')
 			});
 	    });
         $scope.upvote=function(id){
-            console.log('se voto por la mascota '+id);
+            Mascota.upvote(id);
+        	console.log('se voto por la mascota '+id);
         };
         $scope.downvote=function(id){
+        	Mascota.downvote(id);
             console.log('se desvoto por la mascota '+id);
         };
 	}
@@ -269,73 +334,6 @@ angular.module('dcPets.controllers')
 	'Auth',
 	function($scope, $ionicPopup, $state, Auth) {
 		$scope.perfil = {
-		};
-	}
-]);
-angular.module('dcPets.services')
-.factory('Auth', [
-	'$http',
-	'API_SERVER',
-	function($http, API_SERVER) {
-		let token 		= null,
-			userData 	= null;
-
-		function login(user) {
-			return $http.post(API_SERVER + '/login', user).then(function(response) {
-				let responsePayload = response.data;
-				if(responsePayload.status == 1) {
-					token = responsePayload.token;
-					userData = {
-						id		: responsePayload.id,
-						usuario : responsePayload.usuario
-					};
-					return true;
-				} else {
-					return false;
-				}
-			});
-		}
-
-		function isLogged() {
-			if(token != null) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		function getToken() {
-			return token;
-		}
-
-		return {
-			login: login,
-			isLogged: isLogged,
-			getToken: getToken,
-		};
-	}
-]);
-angular.module('dcPets.services')
-.factory('Mascota', [
-	'$http',
-	'API_SERVER',
-	'Auth',
-	function($http, API_SERVER, Auth) {
-
-		return {
-			todos: function() {
-				return $http.get(API_SERVER + '/mascotas');
-			},
-			uno: function(id) {
-				return $http.get(API_SERVER + '/mascotas/' + id);
-			},
-			crear: function(datos) {
-				return $http.post(API_SERVER + '/mascotas', datos, {
-					headers: {
-						'X-Token': Auth.getToken()
-					}
-				});
-			}
 		};
 	}
 ]);

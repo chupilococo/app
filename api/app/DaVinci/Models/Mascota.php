@@ -11,9 +11,10 @@ class Mascota implements JsonSerializable
 	protected $nombre;
     protected $imagen;
     protected $descripcion;
-    
+    protected $score;
+
     /** @var array Listado de todas las propiedades de la clase, para la carga masiva de datos con Pelicula::cargarDatosDeArray */
-    protected $propiedades = ['id_mascota', 'nombre','descripcion','imagen'];
+    protected $propiedades = ['id_mascota', 'nombre','descripcion','imagen','score'];
 
     /**
      * @return array
@@ -25,6 +26,7 @@ class Mascota implements JsonSerializable
             'nombre'        => $this->nombre,
             'descripcion'   => $this->descripcion,
             'imagen'        => $this->imagen,
+            'score'        => $this->score,
         ];
     }
     
@@ -63,6 +65,33 @@ class Mascota implements JsonSerializable
         $fila = $stmt->fetch();
         $this->cargarDatosDeArray($fila);
 	}
+
+
+    /**
+     * @param $id
+     */
+    public function upvote($id)
+    {
+        $db = DBConnection::getConnection();
+        $query = 'UPDATE mascotas m SET SCORE=SCORE+1 WHERE m.id_mascota = ?';
+        $stmt = $db->prepare($query);
+        if($stmt->execute([$id])){
+            $this->traerPorId($id);
+        }
+    }
+
+    /**
+     * @param $id
+     */
+    public function downvote($id)
+    {
+        $db = DBConnection::getConnection();
+        $query = 'UPDATE mascotas m SET SCORE=SCORE-1 WHERE m.id_mascota = ?';
+        $stmt = $db->prepare($query);
+        if($stmt->execute([$id])){
+            $this->traerPorId($id);
+        }
+    }
     
     /**
      * Carga los datos de la $fila en las propiedades.

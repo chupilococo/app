@@ -1,23 +1,16 @@
 angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
-// funcionalidades del dispositivo están disponibles.
 .run(function($ionicPlatform, $rootScope, $ionicPopup,$state, Auth) {
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
   });
   $rootScope.$on('$stateChangeStart', function(event, toState){
     console.log("Cambiando la vista a : ", toState);
-
-
     if(toState.data != undefined && toState.data.requiresAuth == true) {
       if(!Auth.isLogged()) {
         event.preventDefault();
@@ -34,16 +27,7 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
     }
   });
 })
-
-// Config permite definir configuraciones de los módulos (providers).
-// Por ejemplo, configurar el módulo de rutas.
-// Ionic no utiliza ngRoute, sino el ui-router.
-// Este módulo contiene varias mejoras con respecto a
-// ngRoute. Principalmente, permite el uso de subvistas.
-// Una cosa a notar, es que con el ngRoute, utilizaban "routes".
-// Con el ui-router, se habla de "states".
 .config(function($stateProvider, $urlRouterProvider) {
-
   $stateProvider
     .state('tab', {
       url: '/tab',
@@ -92,9 +76,6 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
               }
           }
       })
-
-
-
     .state('tab.mascotas-detalle', {
       url: '/mascotas/:id',
       views: {
@@ -120,6 +101,5 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
 
   $urlRouterProvider.otherwise('/tab/dash');
 })
-
 .constant('API_SERVER', 'http://localhost/app/api/public')
 .constant('NO_IMG', 'img/perro_404.png');

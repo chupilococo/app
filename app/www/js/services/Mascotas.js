@@ -17,7 +17,23 @@ angular.module('dcPets.services')
 					headers: {
 						'X-Token': Auth.getToken()
 					}
+				})
+                },
+            upvote:function(id) {
+				console.log('upvote:',id);
+                return $http.put(API_SERVER + '/mascotas/upvote/'+id,null, {
+                    headers: {
+                        'X-Token': Auth.getToken()
+                    }
 				});
+			},
+            downvote:function(id) {
+				console.log('downvote:',id);
+                return $http.put(API_SERVER + '/mascotas/downpdate/'+id,null,{
+                     headers: {
+                         'X-Token': Auth.getToken()
+                     }
+				 });
 			}
 		};
 	}

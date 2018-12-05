@@ -8,11 +8,10 @@ angular.module('dcPets.controllers', [])
 
     $scope.mascotas = [];
     $scope.$on('$ionicView.beforeEnter', function() {
-      console.log('entroa aca');
         Mascota.todos()
             .then(function(response) {
                 $scope.mascotas = response.data;
-                console.log(' esta es la respuesta',$scope.mascotas);
+                // console.log(' esta es la respuesta',$scope.mascotas);
             });
     });
 });
