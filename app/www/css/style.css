@@ -2,3 +2,9 @@
 .bar.bar-stable {
 	/*background-image: url(../img/gato-pancho.jpg) !important;*/
 }
+
+.img_mascota{
+    max-width: 80%;
+    margin: auto;
+    border-radius: 10%;
+}

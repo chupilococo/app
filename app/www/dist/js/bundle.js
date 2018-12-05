@@ -121,7 +121,8 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
   $urlRouterProvider.otherwise('/tab/dash');
 })
 
-.constant('API_SERVER', 'http://localhost/app/api/public');
+.constant('API_SERVER', 'http://localhost/app/api/public')
+.constant('NO_IMG', 'img/perro_404.png');
 // La presencia del segundo parámetro del .module, indica
 // que el módulo se está creando.
 // Si se ignora, significa que estamos abriendo un 
@@ -139,33 +140,7 @@ angular.module('dcPets.controllers', [])
                 console.log(' esta es la respuesta',$scope.mascotas);
             });
     });
-})
-
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
 });
-
 angular.module('dcPets.services', []);
 
 angular.module('dcPets.controllers')
@@ -202,16 +177,20 @@ angular.module('dcPets.controllers')
 angular.module('dcPets.controllers')
 .controller('MascotasCtrl', [
 	'$scope',
+	'$ionicPopup',
 	'Mascota',
-	function($scope, Mascota) {
+	function($scope,$ionicPopup,Mascota) {
 		$scope.mascotas = [];
 		$scope.$on('$ionicView.beforeEnter', function() {
 	        Mascota.todos()
 			.then(function(response) {
-				console.log(response);
 				$scope.mascotas = response.data;
 			}, function() {
-				alert("TODO MAL AAAHHHHHH");
+                $ionicPopup.alert({
+                    title: 'Upss',
+                    template: 'Puede que haya habido un error \n' +
+						'proba de nuevo, en un rato...'
+                });
 			});
 	    });
         $scope.upvote=function(id){
@@ -227,19 +206,23 @@ angular.module('dcPets.controllers')
 	'$scope',
 	'$stateParams',
 	'Mascota',
-	function($scope, $stateParams, Mascota) {
+	'NO_IMG',
+	function($scope, $stateParams, Mascota, NO_IMG) {
 		$scope.mascota = {
 			id_mascota: null,
 			nombre: null,
-			categoria: null,
-			marca: null,
-			precio: null,
-			descripcion: null
+			descripcion: null,
+			imagen:null
 		};
 
 		Mascota.uno($stateParams.id)
 			.then(function(response) {
 				$scope.mascota = response.data;
+				if(response.data.imagen===''){
+					$scope.mascota.imagen=NO_IMG;
+				}else{
+                    $scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
+				}
 			});
 	}
 ]);
@@ -332,10 +315,7 @@ angular.module('dcPets.services')
 		};
 	}
 ]);
-// Primero, abrimos el módulo de servicios, y creamos el
-// nuevo servicio.
 angular.module('dcPets.services')
-// .factory es el método para crear nuevos servicios.
 .factory('Mascota', [
 	'$http',
 	'API_SERVER',

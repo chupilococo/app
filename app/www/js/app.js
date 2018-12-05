@@ -121,4 +121,5 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
   $urlRouterProvider.otherwise('/tab/dash');
 })
 
-.constant('API_SERVER', 'http://localhost/app/api/public');
+.constant('API_SERVER', 'http://localhost/app/api/public')
+.constant('NO_IMG', 'img/perro_404.png');

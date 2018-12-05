@@ -1,7 +1,4 @@
-// Primero, abrimos el módulo de servicios, y creamos el
-// nuevo servicio.
 angular.module('dcPets.services')
-// .factory es el método para crear nuevos servicios.
 .factory('Mascota', [
 	'$http',
 	'API_SERVER',

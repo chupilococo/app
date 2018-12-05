@@ -1,16 +1,20 @@
 angular.module('dcPets.controllers')
 .controller('MascotasCtrl', [
 	'$scope',
+	'$ionicPopup',
 	'Mascota',
-	function($scope, Mascota) {
+	function($scope,$ionicPopup,Mascota) {
 		$scope.mascotas = [];
 		$scope.$on('$ionicView.beforeEnter', function() {
 	        Mascota.todos()
 			.then(function(response) {
-				console.log(response);
 				$scope.mascotas = response.data;
 			}, function() {
-				alert("TODO MAL AAAHHHHHH");
+                $ionicPopup.alert({
+                    title: 'Upss',
+                    template: 'Puede que haya habido un error \n' +
+						'proba de nuevo, en un rato...'
+                });
 			});
 	    });
         $scope.upvote=function(id){

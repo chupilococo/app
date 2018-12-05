@@ -2,14 +2,14 @@
 	<ion-content class="padding">
 		<h1>{{ mascota.nombre }}</h1>
 		<dl>
-			<dt>Precio</dt>
-			<dd>$ {{ mascota.precio }}</dd>
-			<dt>Categoría</dt>
-			<dd>{{ mascota.categoria }}</dd>
-			<dt>Marca</dt>
-			<dd>{{ mascota.marca }}</dd>
-			<dt>Descripción</dt>
+			<dt>Nombre:</dt>
+			<dd>{{ mascota.nombre }}</dd>
+			<dt>Descripci&#243;n:</dt>
 			<dd>{{ mascota.descripcion }}</dd>
+			<dt>Imag&#233;n:</dt>
+			<dd>
+				<img class="img_mascota" src="{{ mascota.imagen }}" alt="foto del pichicho">
+			</dd>
 		</dl>
 	</ion-content>
 </ion-view>
