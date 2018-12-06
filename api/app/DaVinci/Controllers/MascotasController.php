@@ -99,6 +99,7 @@ class MascotasController
 				'nombre' 		=> $putData['nombre'],
 				'descripcion' 	=> $putData['descripcion'],
                 'imagen'        => $putData['imagen'],
+                'score'         => $putData['score'],
 			]);
 
 			// Todo ok!

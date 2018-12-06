@@ -9,7 +9,7 @@ angular.module('dcPets.services')
 			todos: function() {
 				return $http.get(API_SERVER + '/mascotas');
 			},
-      getByPerfil:function (id) {
+      		getByPerfil:function (id) {
 				return $http.get(API_SERVER+ '/mascotas/perfil/'+id,{
                         headers: {
                             'X-Token': Auth.getToken()
@@ -35,12 +35,18 @@ angular.module('dcPets.services')
 				});
 			},
             downvote:function(id) {
-				console.log('downvote:',id);
                 return $http.put(API_SERVER + '/mascotas/downvote/'+id,null,{
                      headers: {
                          'X-Token': Auth.getToken()
                      }
 				 });
+			},
+			update:function (data) {
+				return $http.put(API_SERVER + '/mascotas/'+id,data,{
+					headers: {
+						'X-Token': Auth.getToken()
+					}
+				});
 			}
 		};
 	}

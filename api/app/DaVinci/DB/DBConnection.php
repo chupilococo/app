@@ -29,8 +29,10 @@ class DBConnection
 
 			try {
 				self::$db = new PDO($dsn, self::$user, self::$pass);
-			} catch(Exception $e) {
-				die("Oops. Parece que hubo un error de conexión a la base. Ya hemos despachado a nuestra escuadra de monos ninja a arreglar el asunto. Probá de nuevo más tarde.");
+                self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            } catch(Exception $e) {
+                die("Oops. Parece que hubo un error de conexión a la base. Ya hemos despachado a nuestra escuadra de monos ninja a arreglar el asunto. Probá de nuevo más tarde.");
 			}
 		}
 		return self::$db;

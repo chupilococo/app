@@ -133,6 +133,7 @@ class Mascota implements JsonSerializable
      * Inserta un nuevo Mascota en la base de datos.
      *
      * @param array $fila
+     * @throws \Exception
      */
 	public function crear($fila)
 	{
@@ -150,15 +151,36 @@ class Mascota implements JsonSerializable
             $fila['id_mascota'] = $db->lastInsertId();
             $this->cargarDatosDeArray($fila);
         } else {
-            throw new Exception('Error al insertar el registro.');
+            throw new \Exception('Error al insertar el registro.');
         }
 	}
 
-	public function editar() 
+	public function editar($fila)
 	{
-	    //TODO Agregar editar
-//		$db = DBConnection::getConnection();
-//		echo "Editando<br>";
+
+	    print_r($fila);
+        $db = DBConnection::getConnection();
+        $query = "update mascotas
+                    SET nombre=:nombre,
+                        imagen=:imagen,
+                        descripcion=:descripcion,
+                        score=:score
+                    where id_mascota=:id_mascota";
+        $stmt = $db->prepare($query);
+        $exito = $stmt->execute([
+            'nombre'        => $fila['nombre'],
+            'imagen'        => $fila['imagen'],
+            'descripcion'   => $fila['descripcion'],
+            'score'         => $fila['score'],
+            'id_mascota'    => $fila['id_mascota'],
+        ]);
+
+        if ($exito){
+            $this->cargarDatosDeArray($fila);
+        }else{
+            throw new \Exception('Error al actualizar el registro.');
+        }
+
 	}
 
 	public function eliminar() 
