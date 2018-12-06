@@ -228,7 +228,7 @@ angular.module('dcPets.controllers')
 				if(response.data.imagen===''){
 					$scope.mascota.imagen=NO_IMG;
 				}else{
-				  $scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
+				  $scope.mascota.imagen=response.data.imagen;
 				}
 			});
     $scope.coments=[];
@@ -268,11 +268,12 @@ angular.module('dcPets.controllers').controller('MascotasEditarCtrl', [
 				if(response.data.imagen===''){
 					$scope.mascota.imagen=NO_IMG;
 				}else{
-					$scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
+					$scope.mascota.imagen=response.data.imagen;
 				}
 			});
 		$scope.update=function(mascota){
-			Mascota.update(mascota).then(function () {
+			Mascota.update(mascota)
+                .then(function () {
 				$ionicPopup.alert({
 					title:'Mascota Editada exitosamente'
 				}).then(function () {
@@ -302,16 +303,18 @@ angular.module('dcPets.controllers')
 	'$state',
 	'$ionicPopup',
 	'Mascota',
-	function($scope, $state, $ionicPopup, Mascota) {
+	'Auth',
+	function($scope, $state, $ionicPopup, Mascota,Auth) {
 		$scope.mascota = {
-			nombre		: null,
-			id_categoria: null,
-			id_marca	: null,
-			precio		: null,
-			descripcion	: null
+            id_mascota: null,
+            nombre: null,
+            descripcion: null,
+            imagen:null,
+            id_usuario:Auth.getId()
 		};
 
-		$scope.grabar = function(mascota) {
+		$scope.crear = function(mascota) {
+		    console.log(mascota);
 			 Mascota.crear(mascota)
 				.then(function(response) {
 					let responseInfo = response.data;
@@ -320,7 +323,6 @@ angular.module('dcPets.controllers')
 							title: 'Éxito!',
 							template: 'El mascota fue creado exitosamente! :D'
 						}).then(function() {
-							// Lo redireccionamos al listado, pero luego de que cierren el mensaje.
 							$state.go('tab.mascotas');
 						});
 					} else if(responseInfo.status == 0) {
@@ -331,6 +333,18 @@ angular.module('dcPets.controllers')
 					}
 				});
 		};
+
+        $scope.imgPreview=function (input) {
+            console.log(input);
+            let reader  = new FileReader();
+            reader.addEventListener("load", function () {
+                $scope.mascota.imagen = reader.result;
+                $scope.$apply();
+            }, false);
+            if (input) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 	}
 ]);
 
@@ -476,7 +490,8 @@ angular.module('dcPets.services')
 				return $http.get(API_SERVER + '/mascotas/' + id);
 			},
 			crear: function(datos) {
-				return $http.post(API_SERVER + '/mascotas', datos, {
+			    console.log(datos);
+				return $http.post(API_SERVER +'/mascotas',datos,{
 					headers: {
 						'X-Token': Auth.getToken()
 					}
@@ -498,7 +513,8 @@ angular.module('dcPets.services')
 				 });
 			},
 			update:function (data) {
-				return $http.put(API_SERVER + '/mascotas/'+id,data,{
+			    console.log(data)
+				return $http.put(API_SERVER + '/mascotas/'+data.id_mascota,data,{
 					headers: {
 						'X-Token': Auth.getToken()
 					}

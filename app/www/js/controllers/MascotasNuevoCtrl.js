@@ -4,16 +4,18 @@ angular.module('dcPets.controllers')
 	'$state',
 	'$ionicPopup',
 	'Mascota',
-	function($scope, $state, $ionicPopup, Mascota) {
+	'Auth',
+	function($scope, $state, $ionicPopup, Mascota,Auth) {
 		$scope.mascota = {
-			nombre		: null,
-			id_categoria: null,
-			id_marca	: null,
-			precio		: null,
-			descripcion	: null
+            id_mascota: null,
+            nombre: null,
+            descripcion: null,
+            imagen:null,
+            id_usuario:Auth.getId()
 		};
 
-		$scope.grabar = function(mascota) {
+		$scope.crear = function(mascota) {
+		    console.log(mascota);
 			 Mascota.crear(mascota)
 				.then(function(response) {
 					let responseInfo = response.data;
@@ -22,7 +24,6 @@ angular.module('dcPets.controllers')
 							title: 'Éxito!',
 							template: 'El mascota fue creado exitosamente! :D'
 						}).then(function() {
-							// Lo redireccionamos al listado, pero luego de que cierren el mensaje.
 							$state.go('tab.mascotas');
 						});
 					} else if(responseInfo.status == 0) {
@@ -33,5 +34,17 @@ angular.module('dcPets.controllers')
 					}
 				});
 		};
+
+        $scope.imgPreview=function (input) {
+            console.log(input);
+            let reader  = new FileReader();
+            reader.addEventListener("load", function () {
+                $scope.mascota.imagen = reader.result;
+                $scope.$apply();
+            }, false);
+            if (input) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 	}
 ]);

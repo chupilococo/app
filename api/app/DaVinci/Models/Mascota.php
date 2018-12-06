@@ -138,13 +138,14 @@ class Mascota implements JsonSerializable
 	public function crear($fila)
 	{
 		$db = DBConnection::getConnection();
-        $query = "INSERT INTO mascotas (nombre, imagen, descripcion)
-                VALUES (:nombre, :imagen, :descripcion)";
+        $query = "INSERT INTO mascotas (nombre, imagen, descripcion,owner)
+                VALUES (:nombre, :imagen, :descripcion,:id_usuario)";
         $stmt = $db->prepare($query);
         $exito = $stmt->execute([
             'nombre'        => $fila['nombre'],
             'imagen'        => $fila['imagen'],
             'descripcion'   => $fila['descripcion'],
+            'id_usuario'   => $fila['id_usuario'],
         ]);
         
         if($exito) {

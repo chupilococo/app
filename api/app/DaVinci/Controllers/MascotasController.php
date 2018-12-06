@@ -27,7 +27,6 @@ class MascotasController
 	{
 		$params = Route::getUrlParameters();
 		$id = $params['id'];
-
 		$mascota = new Mascota;
 		$mascota->traerPorId($id);
 
@@ -60,10 +59,9 @@ class MascotasController
 			$mascota = new Mascota;
 			$mascota->crear([
 				'nombre' 		=> $postData['nombre'],
-				'precio' 		=> $postData['precio'],
-				'id_marca' 		=> $postData['id_marca'],
-				'id_categoria' 	=> $postData['id_categoria'],
-				'descripcion' 	=> $postData['descripcion'],
+				'descripcion' 		=> $postData['descripcion'],
+				'id_usuario' 		=> $postData['id_usuario'],
+				'imagen' 	=> $postData['imagen'],
 			]);
 
 			// Todo ok!

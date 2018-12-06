@@ -13,11 +13,12 @@ angular.module('dcPets.controllers').controller('MascotasEditarCtrl', [
 				if(response.data.imagen===''){
 					$scope.mascota.imagen=NO_IMG;
 				}else{
-					$scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
+					$scope.mascota.imagen=response.data.imagen;
 				}
 			});
 		$scope.update=function(mascota){
-			Mascota.update(mascota).then(function () {
+			Mascota.update(mascota)
+                .then(function () {
 				$ionicPopup.alert({
 					title:'Mascota Editada exitosamente'
 				}).then(function () {

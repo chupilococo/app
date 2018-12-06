@@ -19,7 +19,7 @@ angular.module('dcPets.controllers')
 				if(response.data.imagen===''){
 					$scope.mascota.imagen=NO_IMG;
 				}else{
-				  $scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
+				  $scope.mascota.imagen=response.data.imagen;
 				}
 			});
     $scope.coments=[];
