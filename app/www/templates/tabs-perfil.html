@@ -14,10 +14,10 @@ de la directiva ion-nav-bar. -->
 				<h3>{{ mascota.nombre }}</h3>
 				<p>{{ mascota.descripcion }}</p>
 				<p>{{ mascota.score }}</p>
-				<ion-option-button class="button-balanced" ng-click="delete(mascota.id_mascota)">
+				<ion-option-button class="button-balanced" ng-click="edit(mascota.id_mascota)">
 					Editar
 				</ion-option-button>
-				<ion-option-button class="button-assertive" ng-click="edit(mascota.id_mascota)">
+				<ion-option-button class="button-assertive"  ng-click="delete(mascota.id_mascota)">
 					Eliminar
 				</ion-option-button>
 			</ion-item>

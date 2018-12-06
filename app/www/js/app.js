@@ -87,6 +87,18 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
         }
       }
     })
+      .state('tab.mascotas-edit', {
+      url: '/mascotas/editar/:id',
+          data:{
+            requiresAuth: true
+          },
+      views: {
+        'tab-perfil': {
+          templateUrl: 'templates/tabs-mascotas-editar.html',
+          controller: 'MascotasEditarCtrl'
+        }
+      }
+    })
   .state('tab.login', {
     url: '/login',
     data:{

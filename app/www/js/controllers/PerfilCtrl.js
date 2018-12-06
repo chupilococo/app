@@ -6,6 +6,9 @@ angular.module('dcPets.controllers')
 	'Auth',
 	'Mascota',
 	function($scope, $ionicPopup, $state, Auth,Mascota) {
+        $scope.goTo=function (state,params) {
+            $state.go(state,params);
+        };
         $scope.mascotas = [];
         $scope.$on('$ionicView.beforeEnter', function() {
             Mascota.getByPerfil(Auth.getId())
@@ -20,19 +23,23 @@ angular.module('dcPets.controllers')
                     });
                 });
         });
-        $scope.delete=function () {
+        $scope.delete=function (id) {
 			$ionicPopup.alert(
 				{
-					title:'se borro'
+					title:'se borro la mascota nro'+id
 				}
 			);
         };
-        $scope.edit=function () {
+        $scope.edit=function (id) {
 			$ionicPopup.alert(
 				{
-					title:'se editara'
+					title:'se editara '+id
 				}
-			);
+			).then(
+			    function () {
+                    $state.go('tab.mascotas-edit',{'id':id});
+                }
+            );
         };
 	}
 ]);

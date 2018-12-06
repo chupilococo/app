@@ -87,6 +87,18 @@ angular.module('dcPets', ['ionic', 'dcPets.controllers', 'dcPets.services'])
         }
       }
     })
+      .state('tab.mascotas-edit', {
+      url: '/mascotas/editar/:id',
+          data:{
+            requiresAuth: true
+          },
+      views: {
+        'tab-perfil': {
+          templateUrl: 'templates/tabs-mascotas-editar.html',
+          controller: 'MascotasEditarCtrl'
+        }
+      }
+    })
   .state('tab.login', {
     url: '/login',
     data:{
@@ -241,6 +253,27 @@ angular.module('dcPets.controllers')
 	}
 ]);
 
+angular.module('dcPets.controllers').controller('MascotasEditarCtrl', [
+	'$scope','$stateParams','Mascota','Auth','NO_IMG',
+	function($scope,$stateParams,Mascota,Auth,NO_IMG) {
+		$scope.mascota = {
+			id_mascota: null,
+			nombre: null,
+			descripcion: null,
+			imagen:null
+		};
+		Mascota.uno($stateParams.id)
+			.then(function(response) {
+				$scope.mascota = response.data;
+				if(response.data.imagen===''){
+					$scope.mascota.imagen=NO_IMG;
+				}else{
+					$scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
+				}
+			});
+		}
+]);
+
 angular.module('dcPets.controllers')
 .controller('MascotasNuevoCtrl', [
 	'$scope',
@@ -287,6 +320,9 @@ angular.module('dcPets.controllers')
 	'Auth',
 	'Mascota',
 	function($scope, $ionicPopup, $state, Auth,Mascota) {
+        $scope.goTo=function (state,params) {
+            $state.go(state,params);
+        };
         $scope.mascotas = [];
         $scope.$on('$ionicView.beforeEnter', function() {
             Mascota.getByPerfil(Auth.getId())
@@ -301,19 +337,23 @@ angular.module('dcPets.controllers')
                     });
                 });
         });
-        $scope.delete=function () {
+        $scope.delete=function (id) {
 			$ionicPopup.alert(
 				{
-					title:'se borro'
+					title:'se borro la mascota nro'+id
 				}
 			);
         };
-        $scope.edit=function () {
+        $scope.edit=function (id) {
 			$ionicPopup.alert(
 				{
-					title:'se editara'
+					title:'se editara '+id
 				}
-			);
+			).then(
+			    function () {
+                    $state.go('tab.mascotas-edit',{'id':id});
+                }
+            );
         };
 	}
 ]);

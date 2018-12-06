@@ -1,0 +1,23 @@
+<ion-view view-title="Detalles">
+	<ion-content class="padding">
+		<form ng-submit="update(mascota)">
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Nombre:</span>
+                    <input type="text" ng-model="mascota.nombre">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Descripci&oacute;n:</span>
+                    <textarea ng-model="mascota.descripcion"></textarea>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Una Foti Del Bichi:</span>
+                    <input type="file" ng-model="mascota.imagen">
+                </label>
+            </div>
+            <button class="button button-block button-positive">Ingresar</button>
+        </form>
+        <span>Vista Previa</span>
+        <img class="img_mascota" src="{{mascota.imagen}}" alt="preview de la imagen">
+  </ion-content>
+</ion-view>
