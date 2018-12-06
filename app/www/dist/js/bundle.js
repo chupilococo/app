@@ -162,54 +162,85 @@ angular.module('dcPets.controllers')
 	'Mascota',
 	function($scope,$ionicPopup,Mascota) {
 		$scope.mascotas = [];
+
+		let loadContent=function(){
+      Mascota.todos().then(function(response) {
+          $scope.mascotas = response.data;
+          return Promise.resolve(response.data);
+        }, function() {
+        return $ionicPopup.alert({
+            title: 'Upss',
+            template: 'Puede que haya habido un error \n' +
+              'proba de nuevo, en un rato...'
+          });
+        });
+    };
+
 		$scope.$on('$ionicView.beforeEnter', function() {
-	        Mascota.todos()
-			.then(function(response) {
-				$scope.mascotas = response.data;
-				console.log($scope.mascotas);
-			}, function() {
-                $ionicPopup.alert({
-                    title: 'Upss',
-                    template: 'Puede que haya habido un error \n' +
-						'proba de nuevo, en un rato...'
-                });
-			});
+          loadContent();
 	    });
+
+		  $scope.doRefresh=function(){
+        loadContent();
+        $scope.$broadcast('scroll.refreshComplete');
+      };
+
         $scope.upvote=function(id){
             Mascota.upvote(id);
-        	console.log('se voto por la mascota '+id);
+        	//console.log('se voto por la mascota '+id);
         };
         $scope.downvote=function(id){
         	Mascota.downvote(id);
-            console.log('se desvoto por la mascota '+id);
         };
 	}
 ]);
+
 angular.module('dcPets.controllers')
 .controller('MascotasDetalleCtrl', [
 	'$scope',
 	'$stateParams',
 	'Mascota',
+  'Coments',
+	'Auth',
 	'NO_IMG',
-	function($scope, $stateParams, Mascota, NO_IMG) {
+	function($scope, $stateParams, Mascota,Coments,Auth,NO_IMG) {
 		$scope.mascota = {
 			id_mascota: null,
 			nombre: null,
 			descripcion: null,
 			imagen:null
 		};
-
 		Mascota.uno($stateParams.id)
 			.then(function(response) {
 				$scope.mascota = response.data;
 				if(response.data.imagen===''){
 					$scope.mascota.imagen=NO_IMG;
 				}else{
-                    $scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
+				  $scope.mascota.imagen='data:image/png;base64,'+response.data.imagen;
 				}
 			});
+    $scope.coments=[];
+    Coments.getComents($stateParams.id).then(
+      function(response){
+        $scope.coments=response.data;
+        console.log($scope.coments);
+      }
+    );
+    $scope.comentario={
+      coment:null,
+      id_usuario:null,
+      id_mascota: null
+    };
+    $scope.crearComent=function (comentario) {
+      comentario.id_mascota=$scope.mascota.id_mascota;
+      if(Auth.isLogged()){
+        comentario.id_usuario=Auth.getId();
+      }
+      Coments.crearComent(comentario);
+    }
 	}
 ]);
+
 angular.module('dcPets.controllers')
 .controller('MascotasNuevoCtrl', [
 	'$scope',
@@ -244,9 +275,10 @@ angular.module('dcPets.controllers')
 						});
 					}
 				});
-		}; // EZ PZ - Se pronuncia: "Easy peasy".
+		};
 	}
 ]);
+
 angular.module('dcPets.controllers')
 .controller('PerfilCtrl', [
     '$scope',
@@ -334,6 +366,33 @@ angular.module('dcPets.services')
 	}
 ]);
 angular.module('dcPets.services')
+.factory('Coments', [
+	'$http',
+	'API_SERVER',
+	'Auth',
+	function($http, API_SERVER, Auth) {
+
+		return {
+      getComents:function (id) {
+        return $http.get(API_SERVER+'/coments/'+id,{
+          headers: {
+            'X-Token': Auth.getToken()
+          }
+        })
+      },
+      crearComent:function (data) {
+        return $http.post(API_SERVER+'/coments',data,{
+          headers: {
+            'X-Token': Auth.getToken()
+          }
+        })
+      }
+
+		};
+	}
+]);
+
+angular.module('dcPets.services')
 .factory('Mascota', [
 	'$http',
 	'API_SERVER',
@@ -344,7 +403,7 @@ angular.module('dcPets.services')
 			todos: function() {
 				return $http.get(API_SERVER + '/mascotas');
 			},
-            getByPerfil:function (id) {
+      getByPerfil:function (id) {
 				return $http.get(API_SERVER+ '/mascotas/perfil/'+id,{
                         headers: {
                             'X-Token': Auth.getToken()
@@ -371,7 +430,7 @@ angular.module('dcPets.services')
 			},
             downvote:function(id) {
 				console.log('downvote:',id);
-                return $http.put(API_SERVER + '/mascotas/downpdate/'+id,null,{
+                return $http.put(API_SERVER + '/mascotas/downvote/'+id,null,{
                      headers: {
                          'X-Token': Auth.getToken()
                      }

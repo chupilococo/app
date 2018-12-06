@@ -63,13 +63,11 @@ class App
      */
     public function executeController($controller)
     {
-        // $controller = "HomeController@index";
         $controllerData = explode('@', $controller);
         $controllerName = $controllerData[0];
         $controllerMethod = $controllerData[1];
 
         // $controllerName = "HomeController";
-        // Le agregamos el namespace a la clase.
         $controllerName = "\\DaVinci\\Controllers\\" . $controllerName;
         // Esto nos deja, ej:
         // \DaVinci\Controllers\HomeController

@@ -11,5 +11,24 @@
 				<img class="img_mascota" src="{{ mascota.imagen }}" alt="foto del pichicho">
 			</dd>
 		</dl>
-	</ion-content>
+    <ion-list>
+      <ion-item ng-repeat="coment in coments">
+        <h3><b>{{ coment.usuario }}</b>:{{coment.dateTime}}</h3>
+        <p>{{ coment.coment }}</p>
+      </ion-item>
+    </ion-list>
+    <hr>
+    <h3>Dejanos tu comentario</h3>
+    <form ng-submit="crearComent(comentario)">
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          Contanos del bicho
+          <textarea name="coment" ng-model="comentario.coment"></textarea>
+        </label>
+        <input type="hidden" ng-model="comentario.id_usuario"  >
+        <input type="hidden" ng-model="comentario.id_mascota" >
+        <button class="button button-block button-positive">Comentar</button>
+      </div>
+    </form>
+  </ion-content>
 </ion-view>

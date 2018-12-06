@@ -32,6 +32,6 @@ angular.module('dcPets.controllers')
 						});
 					}
 				});
-		}; // EZ PZ - Se pronuncia: "Easy peasy".
+		};
 	}
 ]);

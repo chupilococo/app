@@ -4,6 +4,9 @@ de la directiva ion-nav-bar. -->
 
 	<!-- ion-content define el contenido a mostrar en el ion-nav-view. -->
 	<ion-content>
+    <ion-refresher on-refresh="doRefresh($ev)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 		<div class="padding">
 			<h2>Listado de Mascotas</h2>
 		</div>

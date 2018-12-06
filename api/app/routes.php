@@ -18,4 +18,6 @@ Route::add('PUT', '/mascotas/upvote/{id}', 'MascotasController@upvote');
 Route::add('PUT', '/mascotas/downvote/{id}', 'MascotasController@downvote');
 Route::add('PUT', '/mascotas/{id}', 'MascotasController@editar');
 Route::add('GET', '/mascotas/perfil/{id}', 'MascotasController@getByPerfil');
+Route::add('GET', '/coments/{id}', 'ComentsController@getComents');
+Route::add('POST', '/coments', 'ComentsController@crear');
 Route::add('DELETE', '/mascotas/{id}', 'MascotasController@eliminar');
